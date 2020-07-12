@@ -1,4 +1,4 @@
-" vim: set foldmethod=marker foldlevel=0 nomodeline:
+" vim: set foldmethod=marker foldlevel=0
 " ============================================================================
 " init.vim of Priyank Chaudhary. Many thanks to Junegunn Choi, Ben Alman,
 " Matthias Bynes, Brandon Amos, and Paul Irish
@@ -40,6 +40,12 @@ let s:darwin = has('mac')
 " VIM-PLUG BLOCK {{{
 " ============================================================================
 
+" Setup vim plug if not already
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
 silent! if plug#begin('~/.local/share/nvim/plugged')
 execute pathogen#infect()
 " File/project management
@@ -55,25 +61,34 @@ augroup nerd_loader
 augroup END
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+# Plug 'justinmk/vim-gtfo' " (xdg-)open terminal/tmux pane/file manager of current directory with got and gof
+# Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKeyVisual', 'WhichKey!', 'WhichKeyVisual!'] } " Show keybinds in a popup
 
 " Colors
 Plug 'AlessandroYorba/Despacio'
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'cocopon/iceberg.vim'
 Plug 'junegunn/seoul256.vim'
-" Plug 'w0ng/vim-hybrid'
-" Plug 'nightsense/snow'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'w0ng/vim-hybrid'
+Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
+Plug 'tomasr/molokai'
+
 " Other visual enhancement
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
-" TODO: Make this default rather than when enabled?
-Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable' }
 Plug 'junegunn/limelight.vim'
+" Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+set noshowmode
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'Yggdroot/indentLine', { 'on': 'IndentLinesEnable', 'for': 'python' }
+" TODO: autocmd
 autocmd! User indentLine doautocmd indentLine Syntax
+" Plug 'liuchengxu/eleline.vim'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'} " semantic highlight for Python
+Plug 'romainl/vim-cool' " disables search highlighting when you are done searching and re-enables it when you search again.
 
 " Edit
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -81,6 +96,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 " Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-eunuch' " :Rename, Delete, Chmod, Mkdir, SudoWrite, SudoEdit, Move commands
+Plug 'rhysd/clever-f.vim' " Extended f, F, t and T key mappings for Vim
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -99,6 +118,8 @@ Plug 'junegunn/vim-slash' " enhanced in buffer search
 Plug 'junegunn/vim-peekaboo' " extends \" and @ in normal mode and <CTRL-R> in insert mode so you can see the contents of the registers
 Plug 'junegunn/vim-after-object' " Target text *after* the designated characters
 Plug 'justinmk/vim-sneak' " motion enhancement
+let g:sneak#label = 1
+" motion within camel and snake case with ",w"
 Plug 'vim-scripts/camelcasemotion', {'for': ['Java', 'Python', 'Go', 'C++']}
 Plug 'AndrewRadev/splitjoin.vim' " Split/join line(s) with gS and gJ
 " Plug 'ConradIrwin/vim-bracketed-paste'  " Automatic `:set paste`¬
